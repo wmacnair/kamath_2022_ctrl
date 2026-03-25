@@ -126,6 +126,8 @@
             steps</a></li>
             <li><a href="#cell-type-annotation"
             id="toc-cell-type-annotation">Cell type annotation</a></li>
+            <li><a href="#subclustering"
+            id="toc-subclustering">Subclustering</a></li>
             <li><a href="#config-files" id="toc-config-files">Config
             files</a></li>
             </ul>
@@ -208,6 +210,13 @@ href="kamath_marker_genes_0.2.html">link</a>)</p></li>
 href="kamath_label_celltypes.html">link</a>)</li>
 </ul>
 </div>
+<div id="subclustering" class="section level2">
+<h2>Subclustering</h2>
+<ul>
+<li>da_neurons_0.2 (<a
+href="kamath_zoom_da_neurons_0.2.html">link</a>)</li>
+</ul>
+</div>
 <div id="config-files" class="section level2">
 <h2>Config files</h2>
 <details closed>
@@ -237,10 +246,27 @@ marker_genes:
 label_celltypes:
   - labeller:       scprocess
     model:          human_cns
+zoom:
+  - data/metadata/zoom_params_kamath_2022_ctrl_dopaminergic.yaml
 resources:
   retries:              2
   gb_save_alevin_to_h5: 16
   gb_run_cellbender:    32</code></pre>
+</details>
+<details closed>
+<summary>
+▸ <em>zoom_params_kamath_2022_ctrl_dopaminergic.yaml</em> (click to
+expand)
+</summary>
+<pre class="yaml"><code>zoom:
+  name:           da_neurons
+  labels_source:  clusters
+  sel_labels:     [cl02]
+  labels_col:     RNA_snn_res.0.2
+qc:
+  qc_min_cells:   50
+integration:
+  int_n_dims:     30</code></pre>
 </details>
 </div>
 </div>

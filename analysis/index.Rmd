@@ -31,8 +31,8 @@ Use this page to navigate through the full set of visualizations and outputs for
 ## Cell type annotation
 - Celltype labelling ([link](kamath_label_celltypes.html))
 
-
-
+## Subclustering
+- da_neurons_0.2 ([link](kamath_zoom_da_neurons_0.2.html))
 
 ## Config files
 
@@ -64,10 +64,29 @@ marker_genes:
 label_celltypes:
   - labeller:       scprocess
     model:          human_cns
+zoom:
+  - data/metadata/zoom_params_kamath_2022_ctrl_dopaminergic.yaml
 resources:
   retries:              2
   gb_save_alevin_to_h5: 16
   gb_run_cellbender:    32
+```
+
+</details>
+
+<details closed>
+<summary>▸ *zoom_params_kamath_2022_ctrl_dopaminergic.yaml* (click to expand)</summary>
+
+```yaml
+zoom:
+  name:           da_neurons
+  labels_source:  clusters
+  sel_labels:     [cl02]
+  labels_col:     RNA_snn_res.0.2
+qc:
+  qc_min_cells:   50
+integration:
+  int_n_dims:     30
 ```
 
 </details>
