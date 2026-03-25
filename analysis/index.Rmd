@@ -1,0 +1,74 @@
+---
+title: "kamath_2022_ctrl"
+author:
+- name: Will Macnair
+  affiliation: 
+  - Church of England
+date: '`r format(as.Date("2026-03-23"), "%B %d, %Y")`'
+output:
+  rmdformats::downcute:
+    highlight: textmate
+    code_folding: hide
+    toc_depth: 3
+    css: custom.css
+---
+
+
+This page serves as a starting point for exploring the results of `scprocess`. The links below organize all generated reports, with each one detailing a specific step of the analysis (e.g., mapping, ambient RNA removal, QC).
+
+Use this page to navigate through the full set of visualizations and outputs for your project.
+
+## Core steps
+
+- Mapping ([link](kamath_mapping.html))
+
+- Ambient RNA removal ([link](kamath_ambient.html))
+- QC ([link](kamath_qc.html))
+- Highly variable genes ([link](kamath_hvgs.html))
+- Integration ([link](kamath_integration.html))
+- Marker genes ([link](kamath_marker_genes_0.2.html))
+
+## Cell type annotation
+- Celltype labelling ([link](kamath_label_celltypes.html))
+
+
+
+
+## Config files
+
+
+<details closed>
+<summary>▸ *config-kamath_2022_ctrl.yaml* (click to expand)</summary>
+
+```yaml
+project:
+  proj_dir:         /pmount/projects/site/pred/brain-sc-data/kamath_2022_ctrl
+  fastq_dir:        /pmount/projects/site/pred/brain-sc-analysis/studies/Kamath_2022_pos/data/fastqs
+    # arv_uuids:        [arkau-4zz18-m2javm2p1c81y0f]
+    # arv_instance:     arkau
+  full_tag:         kamath_2022_ctrl
+  short_tag:        kamath
+  your_name:        Will Macnair
+  affiliation:      Church of England
+  sample_metadata:  data/metadata/sample_metadata_kamath_2022_ctrl_pos.csv
+  ref_txome:        human_2024
+  date_stamp:       "2026-03-23"
+ambient:
+  ambient_method:   cellbender
+qc:
+  qc_max_mito:      0.10
+  qc_max_splice:    0.75
+marker_genes:
+  mkr_custom_genesets:
+    - name: human_brain
+label_celltypes:
+  - labeller:       scprocess
+    model:          human_cns
+resources:
+  retries:              2
+  gb_save_alevin_to_h5: 16
+  gb_run_cellbender:    32
+```
+
+</details>
+

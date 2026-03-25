@@ -1,0 +1,8 @@
+name: "kamath_2022_ctrl"
+output_dir: ../public
+navbar:
+  title: "kamath_2022_ctrl"
+output:
+  rmdformats::downcute:
+    highlight: textmate
+    code_folding: hide

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="generator" content="pandoc" />
+
+    
+        <meta name="date" content="2026-03-23" />
+    
+    <title>Cell-level QC</title>
+
+        <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+        <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="site_libs/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+        <script src="site_libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+        <script src="site_libs/navigation-1.1/tabsets.js"></script>
+        <script src="site_libs/navigation-1.1/codefolding.js"></script>
+        <link href="site_libs/downcute-0.1/downcute.css" rel="stylesheet" />
+        <link href="site_libs/downcute-0.1/downcute_fonts_embed.css" rel="stylesheet" />
+        <script src="site_libs/downcute-0.1/downcute_styles.js"></script>
+        <script src="site_libs/downcute-0.1/downcute.js"></script>
+        <script src="site_libs/prism-1.22/prism.js"></script>
+    
+    
+    
+        <link rel="stylesheet" href="custom.css" type="text/css" />
+    
+    <!-- tabsets -->
+    <script>
+      $(document).ready(function () {
+	  window.buildTabsets("toc");
+      });
+      $(document).ready(function () {
+	  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+	      $(this).parent().toggleClass('nav-tabs-open')
+	  });
+      });
+    </script>
+
+    <!-- code folding -->
+        <script>
+      $(document).ready(function () {
+	  	  	  window.initializeCodeFolding("hide" === "show");
+	        });
+    </script>
+    
+    <!-- code download -->
+    
+    <!-- tabsets dropdown -->
+
+    <style type="text/css">
+      .tabset-dropdown > .nav-tabs {
+	  display: inline-table;
+	  max-height: 500px;
+	  min-height: 44px;
+	  overflow-y: auto;
+	  background: white;
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+	  content: "&#xe258;";
+	  border: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+	  content: "";
+	  font-family: 'Glyphicons Halflings';
+	  display: inline-block;
+	  padding: 10px;
+	  border-right: 1px solid #ddd;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li.active {
+	  display: block;
+      }
+
+      .tabset-dropdown > .nav-tabs > li.active a {
+  	  padding: 0 15px !important;
+      }
+
+      .tabset-dropdown > .nav-tabs > li > a,
+      .tabset-dropdown > .nav-tabs > li > a:focus,
+      .tabset-dropdown > .nav-tabs > li > a:hover {
+	  border: none;
+	  display: inline-block;
+	  border-radius: 4px;
+	  background-color: transparent;
+      }
+      
+      .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+	  display: block;
+	  float: none;
+      }
+      
+      .tabset-dropdown > .nav-tabs > li {
+	  display: none;
+	  margin-left: 0 !important;
+      }
+    </style>
+    
+</head>
+
+<body class="preload">
+
+   	
+               <!-- downcute start -->   
+   <div id="docute" class="Root theme-default">
+     <div class="Page layout-narrow">
+      <div class="Wrap">
+        <div class="Sidebar">
+          <div class="SidebarItems" id="toc">
+            <ul>
+            <li><a href="#sample-qc-metrics"
+            id="toc-sample-qc-metrics">Sample QC metrics</a>
+            <ul>
+            <li><a href="#pre-qc" id="toc-pre-qc">Pre-QC</a></li>
+            <li><a href="#after-light-qc" id="toc-after-light-qc">After
+            light QC</a></li>
+            </ul></li>
+            <li><a href="#qc-metrics-scatterplots"
+            id="toc-qc-metrics-scatterplots">QC metrics scatterplots</a>
+            <ul>
+            <li><a href="#samn29101222"
+            id="toc-samn29101222">SAMN29101222</a></li>
+            <li><a href="#samn29101249"
+            id="toc-samn29101249">SAMN29101249</a></li>
+            <li><a href="#samn29101227"
+            id="toc-samn29101227">SAMN29101227</a></li>
+            <li><a href="#samn29101247"
+            id="toc-samn29101247">SAMN29101247</a></li>
+            <li><a href="#samn29101284"
+            id="toc-samn29101284">SAMN29101284</a></li>
+            <li><a href="#samn29101255"
+            id="toc-samn29101255">SAMN29101255</a></li>
+            <li><a href="#samn29101262"
+            id="toc-samn29101262">SAMN29101262</a></li>
+            <li><a href="#samn29101235"
+            id="toc-samn29101235">SAMN29101235</a></li>
+            <li><a href="#samn29101271"
+            id="toc-samn29101271">SAMN29101271</a></li>
+            <li><a href="#samn29101226"
+            id="toc-samn29101226">SAMN29101226</a></li>
+            <li><a href="#samn29101231"
+            id="toc-samn29101231">SAMN29101231</a></li>
+            <li><a href="#samn29101274"
+            id="toc-samn29101274">SAMN29101274</a></li>
+            <li><a href="#samn29101238"
+            id="toc-samn29101238">SAMN29101238</a></li>
+            <li><a href="#samn29101245"
+            id="toc-samn29101245">SAMN29101245</a></li>
+            <li><a href="#samn29101290"
+            id="toc-samn29101290">SAMN29101290</a></li>
+            <li><a href="#samn29101206"
+            id="toc-samn29101206">SAMN29101206</a></li>
+            <li><a href="#samn29101292"
+            id="toc-samn29101292">SAMN29101292</a></li>
+            <li><a href="#samn29101278"
+            id="toc-samn29101278">SAMN29101278</a></li>
+            <li><a href="#samn29101256"
+            id="toc-samn29101256">SAMN29101256</a></li>
+            <li><a href="#samn29101279"
+            id="toc-samn29101279">SAMN29101279</a></li>
+            <li><a href="#samn29101223"
+            id="toc-samn29101223">SAMN29101223</a></li>
+            </ul></li>
+            <li><a href="#how-many-cells-and-samples-retained"
+            id="toc-how-many-cells-and-samples-retained">How many cells
+            and samples retained?</a></li>
+            <li><a href="#what-were-the-reasons-for-excluding-barcodes"
+            id="toc-what-were-the-reasons-for-excluding-barcodes">What
+            were the reasons for excluding barcodes?</a>
+            <ul>
+            <li><a href="#samn29101222-1"
+            id="toc-samn29101222-1">SAMN29101222</a></li>
+            <li><a href="#samn29101249-1"
+            id="toc-samn29101249-1">SAMN29101249</a></li>
+            <li><a href="#samn29101227-1"
+            id="toc-samn29101227-1">SAMN29101227</a></li>
+            <li><a href="#samn29101247-1"
+            id="toc-samn29101247-1">SAMN29101247</a></li>
+            <li><a href="#samn29101284-1"
+            id="toc-samn29101284-1">SAMN29101284</a></li>
+            <li><a href="#samn29101255-1"
+            id="toc-samn29101255-1">SAMN29101255</a></li>
+            <li><a href="#samn29101262-1"
+            id="toc-samn29101262-1">SAMN29101262</a></li>
+            <li><a href="#samn29101235-1"
+            id="toc-samn29101235-1">SAMN29101235</a></li>
+            <li><a href="#samn29101271-1"
+            id="toc-samn29101271-1">SAMN29101271</a></li>
+            <li><a href="#samn29101226-1"
+            id="toc-samn29101226-1">SAMN29101226</a></li>
+            <li><a href="#samn29101231-1"
+            id="toc-samn29101231-1">SAMN29101231</a></li>
+            <li><a href="#samn29101274-1"
+            id="toc-samn29101274-1">SAMN29101274</a></li>
+            <li><a href="#samn29101238-1"
+            id="toc-samn29101238-1">SAMN29101238</a></li>
+            <li><a href="#samn29101245-1"
+            id="toc-samn29101245-1">SAMN29101245</a></li>
+            <li><a href="#samn29101290-1"
+            id="toc-samn29101290-1">SAMN29101290</a></li>
+            <li><a href="#samn29101206-1"
+            id="toc-samn29101206-1">SAMN29101206</a></li>
+            <li><a href="#samn29101292-1"
+            id="toc-samn29101292-1">SAMN29101292</a></li>
+            <li><a href="#samn29101278-1"
+            id="toc-samn29101278-1">SAMN29101278</a></li>
+            <li><a href="#samn29101256-1"
+            id="toc-samn29101256-1">SAMN29101256</a></li>
+            <li><a href="#samn29101279-1"
+            id="toc-samn29101279-1">SAMN29101279</a></li>
+            <li><a href="#samn29101223-1"
+            id="toc-samn29101223-1">SAMN29101223</a></li>
+            </ul></li>
+            <li><a href="#r-session-info" id="toc-r-session-info">R
+            session info</a></li>
+            </ul>
+          </div>
+          <div data-position="sidebar:post-end" class="InjectedComponents"><div class="dark-theme-toggler"><div class="toggle "><div class="toggle-track"><div class="toggle-track-check"><img  src="data:image/png;base64,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" role="presentation" style="pointer-events: none;" width="16" height="16"></div> <div class="toggle-track-x"><img src="data:image/png;base64,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" role="presentation" style="pointer-events: none;" width="16" height="16"></div></div> <div class="toggle-thumb"></div></div> <input type="checkbox" aria-label="Switch between Dark and Default theme" class="toggler-screen-reader-only"></div></div>
+        </div>
+        <div class="Main">
+          <div class="Content" id="content"> 
+   
+      <div class="btn-group pull-right">
+     <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+     <ul class="dropdown-menu" style="min-width: 50px;">
+	    	    <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+	    <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+	    	    	         </ul>
+   </div>
+   
+      
+      <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">kamath_2022_ctrl</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+      </div><!--/.navbar -->
+        
+      <h1 class="title">Cell-level QC</h1>
+      
+      <p class="authors">
+           <span class="glyphicon glyphicon-user"></span> Will Macnair
+           - Church of England
+               <br>
+      </p>
+         <p class="date"><span class="glyphicon glyphicon-calendar"></span> March
+23, 2026</p>
+           
+
+   
+      
+   
+<!-- Don't indent these lines or it will mess pre blocks indentation --> 
+<div class="page-content has-page-title">
+<div id="sample-qc-metrics" class="section level2 tabset">
+<h2 class="tabset">Sample QC metrics</h2>
+<p>An overview of quality control (QC) metrics for all samples, both
+before and after filtering. The QC metrics include:</p>
+<ul>
+<li><p><code>no. of cells</code> : Total number of barcodes called as
+cells for each sample.</p></li>
+<li><p><code>no. of UMIs</code> : Sum of counts across all features for
+each cell with log-transformed values displayed.</p></li>
+<li><p><code>no. of genes</code> : Number of unique features with
+non-zero counts for each cell with log-transformed values
+displayed.</p></li>
+<li><p><code>mito pct.</code> : The proportion of reads that mapped to
+genes in the mitochondrial genome. High proportions are indicative of
+poor-quality cells (compromised membranes allow individual RNA molecules
+to escape while retaining mitochondria, leading to an increased relative
+abundance of mitochondrial transcript) or nuclei (incomplete removal of
+cytoplasm). Logit-transformed values are displayed as applying the logit
+(inverse logistic) transformation to mitochondrial proportions yields
+approximately Gaussian distributions.</p></li>
+<li><p><code>spliced pct.</code> : The proportion of spliced reads. In
+single-nuclei RNA sequencing, high spliced proportions may indicate
+inadequate removal of cytoplasmic material from the nuclei.
+Logit-transformed values are displayed as applying the logit (inverse
+logistic) transformation to spliced proportions results in approximately
+Gaussian distributions.</p></li>
+</ul>
+<pre class="r"><code>suppressWarnings({
+  cat(&quot;### Pre-QC\n&quot;)
+  print(plot_qc_ranges_marginals(qc_dt, b_lvls, qc_names, qc_lu, cuts_dt, batch_var))
+  cat(&quot;\n\n&quot;)
+  cat(&quot;### After light QC\n&quot;)
+  print(plot_qc_ranges_marginals(kept_dt, b_lvls, qc_names, qc_lu, cuts_dt, batch_var))
+  cat(&quot;\n\n&quot;)
+})</code></pre>
+<div id="pre-qc" class="section level3">
+<h3>Pre-QC</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_ranges_marginals-1.png" width="768" /></p>
+</div>
+<div id="after-light-qc" class="section level3">
+<h3>After light QC</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_ranges_marginals-2.png" width="768" /></p>
+</div>
+</div>
+<div id="qc-metrics-scatterplots" class="section level2 tabset">
+<h2 class="tabset">QC metrics scatterplots</h2>
+<p>Pairwise relationships of QC metrics at individual cell level.</p>
+<pre class="r"><code>for (b in b_lvls) {
+  qc_tmp      = qc_dt[ batch_var == b ]
+  if (nrow(qc_tmp) == 1)
+    next
+  cat(&#39;### &#39;, b, &#39;\n&#39;)
+  print(plot_qc_metric_scatter(qc_tmp, qc_names, qc_lu, cuts_dt[ batch_var == b ], b))
+  cat(&#39;\n\n&#39;)
+}</code></pre>
+<div id="samn29101222" class="section level3">
+<h3>SAMN29101222</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-1.png" width="768" /></p>
+</div>
+<div id="samn29101249" class="section level3">
+<h3>SAMN29101249</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-2.png" width="768" /></p>
+</div>
+<div id="samn29101227" class="section level3">
+<h3>SAMN29101227</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-3.png" width="768" /></p>
+</div>
+<div id="samn29101247" class="section level3">
+<h3>SAMN29101247</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-4.png" width="768" /></p>
+</div>
+<div id="samn29101284" class="section level3">
+<h3>SAMN29101284</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-5.png" width="768" /></p>
+</div>
+<div id="samn29101255" class="section level3">
+<h3>SAMN29101255</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-6.png" width="768" /></p>
+</div>
+<div id="samn29101262" class="section level3">
+<h3>SAMN29101262</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-7.png" width="768" /></p>
+</div>
+<div id="samn29101235" class="section level3">
+<h3>SAMN29101235</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-8.png" width="768" /></p>
+</div>
+<div id="samn29101271" class="section level3">
+<h3>SAMN29101271</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-9.png" width="768" /></p>
+</div>
+<div id="samn29101226" class="section level3">
+<h3>SAMN29101226</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-10.png" width="768" /></p>
+</div>
+<div id="samn29101231" class="section level3">
+<h3>SAMN29101231</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-11.png" width="768" /></p>
+</div>
+<div id="samn29101274" class="section level3">
+<h3>SAMN29101274</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-12.png" width="768" /></p>
+</div>
+<div id="samn29101238" class="section level3">
+<h3>SAMN29101238</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-13.png" width="768" /></p>
+</div>
+<div id="samn29101245" class="section level3">
+<h3>SAMN29101245</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-14.png" width="768" /></p>
+</div>
+<div id="samn29101290" class="section level3">
+<h3>SAMN29101290</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-15.png" width="768" /></p>
+</div>
+<div id="samn29101206" class="section level3">
+<h3>SAMN29101206</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-16.png" width="768" /></p>
+</div>
+<div id="samn29101292" class="section level3">
+<h3>SAMN29101292</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-17.png" width="768" /></p>
+</div>
+<div id="samn29101278" class="section level3">
+<h3>SAMN29101278</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-18.png" width="768" /></p>
+</div>
+<div id="samn29101256" class="section level3">
+<h3>SAMN29101256</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-19.png" width="768" /></p>
+</div>
+<div id="samn29101279" class="section level3">
+<h3>SAMN29101279</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-20.png" width="768" /></p>
+</div>
+<div id="samn29101223" class="section level3">
+<h3>SAMN29101223</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_qc_metric_scatters-21.png" width="768" /></p>
+</div>
+</div>
+<div id="how-many-cells-and-samples-retained" class="section level2">
+<h2>How many cells and samples retained?</h2>
+<p>Table summarizing the number of cells before and after qc filtering.
+Some samples may have been excluded from further analysis due to
+insufficient number of cells.</p>
+<pre class="r"><code>calc_qc_summary(qc_dt, kept_dt, cuts_dt, qc_lu, batch_var) %&gt;% knitr::kable()</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="7%" />
+<col width="4%" />
+<col width="4%" />
+<col width="5%" />
+<col width="6%" />
+<col width="7%" />
+<col width="15%" />
+<col width="16%" />
+<col width="15%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">sample_id</th>
+<th align="left">excluded</th>
+<th align="right">N pre-QC</th>
+<th align="right">N post-QC</th>
+<th align="right">N excluded</th>
+<th align="right">pct. excluded</th>
+<th align="right">pct. excluded by no. of UMIs</th>
+<th align="right">pct. excluded by no. of genes</th>
+<th align="right">pct. excluded by mito. pct.</th>
+<th align="right">pct. excluded by spliced pct.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">SAMN29101223</td>
+<td align="left">FALSE</td>
+<td align="right">1157</td>
+<td align="right">254</td>
+<td align="right">903</td>
+<td align="right">78.0</td>
+<td align="right">13.7</td>
+<td align="right">10.2</td>
+<td align="right">66.8</td>
+<td align="right">5.5</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101279</td>
+<td align="left">FALSE</td>
+<td align="right">3314</td>
+<td align="right">1223</td>
+<td align="right">2091</td>
+<td align="right">63.1</td>
+<td align="right">24.5</td>
+<td align="right">19.3</td>
+<td align="right">44.3</td>
+<td align="right">7.2</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101255</td>
+<td align="left">FALSE</td>
+<td align="right">6405</td>
+<td align="right">3359</td>
+<td align="right">3046</td>
+<td align="right">47.6</td>
+<td align="right">14.9</td>
+<td align="right">12.6</td>
+<td align="right">45.6</td>
+<td align="right">3.5</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101227</td>
+<td align="left">FALSE</td>
+<td align="right">10497</td>
+<td align="right">5613</td>
+<td align="right">4884</td>
+<td align="right">46.5</td>
+<td align="right">26.7</td>
+<td align="right">19.3</td>
+<td align="right">39.7</td>
+<td align="right">5.4</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101292</td>
+<td align="left">FALSE</td>
+<td align="right">5710</td>
+<td align="right">3756</td>
+<td align="right">1954</td>
+<td align="right">34.2</td>
+<td align="right">5.9</td>
+<td align="right">6.4</td>
+<td align="right">27.9</td>
+<td align="right">10.2</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101222</td>
+<td align="left">FALSE</td>
+<td align="right">6889</td>
+<td align="right">4885</td>
+<td align="right">2004</td>
+<td align="right">29.1</td>
+<td align="right">7.4</td>
+<td align="right">7.7</td>
+<td align="right">26.2</td>
+<td align="right">4.0</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101235</td>
+<td align="left">FALSE</td>
+<td align="right">7075</td>
+<td align="right">5026</td>
+<td align="right">2049</td>
+<td align="right">29.0</td>
+<td align="right">5.7</td>
+<td align="right">6.7</td>
+<td align="right">25.4</td>
+<td align="right">4.6</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101271</td>
+<td align="left">FALSE</td>
+<td align="right">6899</td>
+<td align="right">4953</td>
+<td align="right">1946</td>
+<td align="right">28.2</td>
+<td align="right">7.3</td>
+<td align="right">6.1</td>
+<td align="right">25.1</td>
+<td align="right">1.7</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101247</td>
+<td align="left">FALSE</td>
+<td align="right">3337</td>
+<td align="right">2445</td>
+<td align="right">892</td>
+<td align="right">26.7</td>
+<td align="right">7.0</td>
+<td align="right">7.3</td>
+<td align="right">24.4</td>
+<td align="right">3.4</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101256</td>
+<td align="left">FALSE</td>
+<td align="right">1959</td>
+<td align="right">1473</td>
+<td align="right">486</td>
+<td align="right">24.8</td>
+<td align="right">3.1</td>
+<td align="right">4.0</td>
+<td align="right">3.9</td>
+<td align="right">22.7</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101262</td>
+<td align="left">FALSE</td>
+<td align="right">7431</td>
+<td align="right">5692</td>
+<td align="right">1739</td>
+<td align="right">23.4</td>
+<td align="right">7.1</td>
+<td align="right">8.0</td>
+<td align="right">20.5</td>
+<td align="right">3.6</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101278</td>
+<td align="left">FALSE</td>
+<td align="right">2834</td>
+<td align="right">2187</td>
+<td align="right">647</td>
+<td align="right">22.8</td>
+<td align="right">8.3</td>
+<td align="right">6.2</td>
+<td align="right">1.5</td>
+<td align="right">16.4</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101284</td>
+<td align="left">FALSE</td>
+<td align="right">8422</td>
+<td align="right">6590</td>
+<td align="right">1832</td>
+<td align="right">21.8</td>
+<td align="right">6.9</td>
+<td align="right">6.9</td>
+<td align="right">17.0</td>
+<td align="right">4.8</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101249</td>
+<td align="left">FALSE</td>
+<td align="right">8779</td>
+<td align="right">7135</td>
+<td align="right">1644</td>
+<td align="right">18.7</td>
+<td align="right">5.8</td>
+<td align="right">6.2</td>
+<td align="right">15.0</td>
+<td align="right">4.4</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101206</td>
+<td align="left">FALSE</td>
+<td align="right">8748</td>
+<td align="right">7208</td>
+<td align="right">1540</td>
+<td align="right">17.6</td>
+<td align="right">7.1</td>
+<td align="right">8.1</td>
+<td align="right">13.6</td>
+<td align="right">3.1</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101290</td>
+<td align="left">FALSE</td>
+<td align="right">3842</td>
+<td align="right">3172</td>
+<td align="right">670</td>
+<td align="right">17.4</td>
+<td align="right">7.2</td>
+<td align="right">7.4</td>
+<td align="right">13.7</td>
+<td align="right">3.3</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101226</td>
+<td align="left">FALSE</td>
+<td align="right">7781</td>
+<td align="right">6550</td>
+<td align="right">1231</td>
+<td align="right">15.8</td>
+<td align="right">4.1</td>
+<td align="right">5.2</td>
+<td align="right">12.3</td>
+<td align="right">2.6</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101274</td>
+<td align="left">FALSE</td>
+<td align="right">7510</td>
+<td align="right">6439</td>
+<td align="right">1071</td>
+<td align="right">14.3</td>
+<td align="right">4.0</td>
+<td align="right">4.6</td>
+<td align="right">10.9</td>
+<td align="right">2.6</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101231</td>
+<td align="left">FALSE</td>
+<td align="right">7562</td>
+<td align="right">6513</td>
+<td align="right">1049</td>
+<td align="right">13.9</td>
+<td align="right">3.2</td>
+<td align="right">4.5</td>
+<td align="right">10.9</td>
+<td align="right">2.5</td>
+</tr>
+<tr class="even">
+<td align="left">SAMN29101238</td>
+<td align="left">FALSE</td>
+<td align="right">6588</td>
+<td align="right">5682</td>
+<td align="right">906</td>
+<td align="right">13.8</td>
+<td align="right">3.5</td>
+<td align="right">5.3</td>
+<td align="right">10.8</td>
+<td align="right">2.8</td>
+</tr>
+<tr class="odd">
+<td align="left">SAMN29101245</td>
+<td align="left">FALSE</td>
+<td align="right">5702</td>
+<td align="right">4956</td>
+<td align="right">746</td>
+<td align="right">13.1</td>
+<td align="right">3.2</td>
+<td align="right">4.2</td>
+<td align="right">9.0</td>
+<td align="right">3.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="what-were-the-reasons-for-excluding-barcodes"
+class="section level2 tabset">
+<h2 class="tabset">What were the reasons for excluding barcodes?</h2>
+<p>An upset plot is generated for each sample to visualize the reasons
+for barcode exclusion. The plot shows the overlap between different
+exclusion criteria, with vertical bars representing the size of each
+intersection. Plots are omitted for samples where no barcodes were
+excluded.</p>
+<pre class="r"><code>for (bb in b_lvls) {
+  qc_tmp      = qc_dt[ batch_var == bb ]
+  if (nrow(qc_tmp) == 1 | sum(qc_tmp$keep) == nrow(qc_tmp))
+    next
+  cat(&#39;### &#39;, bb, &#39;\n&#39;)
+  suppressMessages( print(plot_upset_of_exclusions(qc_tmp, qc_names, qc_lu, cuts_dt)) )
+  cat(&#39;\n\n&#39;)
+}</code></pre>
+<div id="samn29101222-1" class="section level3">
+<h3>SAMN29101222</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-1.png" width="576" /></p>
+</div>
+<div id="samn29101249-1" class="section level3">
+<h3>SAMN29101249</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-2.png" width="576" /></p>
+</div>
+<div id="samn29101227-1" class="section level3">
+<h3>SAMN29101227</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-3.png" width="576" /></p>
+</div>
+<div id="samn29101247-1" class="section level3">
+<h3>SAMN29101247</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-4.png" width="576" /></p>
+</div>
+<div id="samn29101284-1" class="section level3">
+<h3>SAMN29101284</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-5.png" width="576" /></p>
+</div>
+<div id="samn29101255-1" class="section level3">
+<h3>SAMN29101255</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-6.png" width="576" /></p>
+</div>
+<div id="samn29101262-1" class="section level3">
+<h3>SAMN29101262</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-7.png" width="576" /></p>
+</div>
+<div id="samn29101235-1" class="section level3">
+<h3>SAMN29101235</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-8.png" width="576" /></p>
+</div>
+<div id="samn29101271-1" class="section level3">
+<h3>SAMN29101271</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-9.png" width="576" /></p>
+</div>
+<div id="samn29101226-1" class="section level3">
+<h3>SAMN29101226</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-10.png" width="576" /></p>
+</div>
+<div id="samn29101231-1" class="section level3">
+<h3>SAMN29101231</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-11.png" width="576" /></p>
+</div>
+<div id="samn29101274-1" class="section level3">
+<h3>SAMN29101274</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-12.png" width="576" /></p>
+</div>
+<div id="samn29101238-1" class="section level3">
+<h3>SAMN29101238</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-13.png" width="576" /></p>
+</div>
+<div id="samn29101245-1" class="section level3">
+<h3>SAMN29101245</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-14.png" width="576" /></p>
+</div>
+<div id="samn29101290-1" class="section level3">
+<h3>SAMN29101290</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-15.png" width="576" /></p>
+</div>
+<div id="samn29101206-1" class="section level3">
+<h3>SAMN29101206</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-16.png" width="576" /></p>
+</div>
+<div id="samn29101292-1" class="section level3">
+<h3>SAMN29101292</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-17.png" width="576" /></p>
+</div>
+<div id="samn29101278-1" class="section level3">
+<h3>SAMN29101278</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-18.png" width="576" /></p>
+</div>
+<div id="samn29101256-1" class="section level3">
+<h3>SAMN29101256</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-19.png" width="576" /></p>
+</div>
+<div id="samn29101279-1" class="section level3">
+<h3>SAMN29101279</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-20.png" width="576" /></p>
+</div>
+<div id="samn29101223-1" class="section level3">
+<h3>SAMN29101223</h3>
+<p><img src="figure/kamath_qc.Rmd/plot_upsets_of_exclusions-21.png" width="576" /></p>
+</div>
+</div>
+<div id="r-session-info" class="section level2">
+<h2>R session info</h2>
+<p>Details of the R package versions used are given below.</p>
+<details>
+<pre class="r"><code>devtools::session_info()</code></pre>
+<pre><code>## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value
+##  version  R version 4.4.3 (2025-02-28)
+##  os       Red Hat Enterprise Linux 8.10 (Ootpa)
+##  system   x86_64, linux-gnu
+##  ui       X11
+##  language (EN)
+##  collate  en_US.UTF-8
+##  ctype    en_US.UTF-8
+##  tz       Europe/Zurich
+##  date     2026-03-25
+##  pandoc   3.8.2.1 @ /home/macnairw/packages/scprocess/.snakemake/conda/4fef11cadd34f9d2d13a0d6139d09340_/bin/ (via rmarkdown)
+##  quarto   NA
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package              * version   date (UTC) lib source
+##  abind                * 1.4-8     2024-09-12 [1] CRAN (R 4.4.3)
+##  assertthat           * 0.2.1     2019-03-21 [1] CRAN (R 4.4.3)
+##  beachmat               2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  beeswarm               0.4.0     2021-06-01 [1] CRAN (R 4.4.3)
+##  Biobase              * 2.66.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  BiocGenerics         * 0.52.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  BiocIO                 1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  BiocManager            1.30.27   2025-11-14 [1] CRAN (R 4.4.3)
+##  BiocNeighbors          2.0.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  BiocParallel         * 1.40.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  BiocSingular           1.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  BiocStyle            * 2.34.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  Biostrings             2.74.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  bitops                 1.0-9     2024-10-03 [1] CRAN (R 4.4.3)
+##  bluster                1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  bookdown               0.45      2025-10-03 [1] CRAN (R 4.4.3)
+##  bslib                  0.9.0     2025-01-30 [1] CRAN (R 4.4.3)
+##  ca                     0.71.1    2020-01-24 [1] CRAN (R 4.4.3)
+##  cachem                 1.1.0     2024-05-16 [1] CRAN (R 4.4.3)
+##  callr                  3.7.6     2024-03-25 [1] CRAN (R 4.4.3)
+##  cellranger             1.1.0     2016-07-27 [1] CRAN (R 4.4.3)
+##  circlize             * 0.4.16    2024-02-20 [1] CRAN (R 4.4.3)
+##  cli                    3.6.5     2025-04-23 [1] CRAN (R 4.4.3)
+##  clue                   0.3-66    2024-11-13 [1] CRAN (R 4.4.3)
+##  cluster                2.1.8.1   2025-03-12 [1] CRAN (R 4.4.3)
+##  codetools              0.2-20    2024-03-31 [1] CRAN (R 4.4.3)
+##  colorspace             2.1-2     2025-09-22 [1] CRAN (R 4.4.3)
+##  ComplexHeatmap       * 2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  crayon                 1.5.3     2024-06-20 [1] CRAN (R 4.4.3)
+##  curl                   7.0.0     2025-08-19 [1] CRAN (R 4.4.3)
+##  data.table           * 1.17.8    2025-07-10 [1] CRAN (R 4.4.3)
+##  DelayedArray         * 0.32.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  devtools               2.4.6     2025-10-03 [1] CRAN (R 4.4.3)
+##  digest                 0.6.39    2025-11-19 [1] CRAN (R 4.4.3)
+##  doParallel             1.0.17    2022-02-07 [1] CRAN (R 4.4.3)
+##  dplyr                * 1.1.4     2023-11-17 [1] CRAN (R 4.4.3)
+##  dqrng                  0.3.2     2023-11-29 [1] CRAN (R 4.4.3)
+##  edgeR                  4.4.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  ellipsis               0.3.2     2021-04-29 [1] CRAN (R 4.4.3)
+##  evaluate               1.0.5     2025-08-27 [1] CRAN (R 4.4.3)
+##  farver                 2.1.2     2024-05-13 [1] CRAN (R 4.4.3)
+##  fastmap                1.2.0     2024-05-15 [1] CRAN (R 4.4.3)
+##  forcats              * 1.0.1     2025-09-25 [1] CRAN (R 4.4.3)
+##  foreach                1.5.2     2022-02-02 [1] CRAN (R 4.4.3)
+##  fs                     1.6.6     2025-04-12 [1] CRAN (R 4.4.3)
+##  generics               0.1.4     2025-05-09 [1] CRAN (R 4.4.3)
+##  GenomeInfoDb         * 1.42.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  GenomeInfoDbData       1.2.13    2026-03-05 [1] Bioconductor
+##  GenomicAlignments      1.42.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  GenomicRanges        * 1.58.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  GetoptLong             1.0.5     2020-12-15 [1] CRAN (R 4.4.3)
+##  getPass                0.2-4     2023-12-10 [1] CRAN (R 4.4.3)
+##  ggbeeswarm           * 0.7.2     2023-04-29 [1] CRAN (R 4.4.3)
+##  ggh4x                * 0.3.1     2025-05-30 [1] CRAN (R 4.4.3)
+##  ggplot.multistats    * 1.0.1     2024-09-25 [1] CRAN (R 4.4.3)
+##  ggplot2              * 4.0.1     2025-11-14 [1] CRAN (R 4.4.3)
+##  ggrepel              * 0.9.6     2024-09-07 [1] CRAN (R 4.4.3)
+##  git2r                  0.35.0    2024-10-20 [1] CRAN (R 4.4.3)
+##  GlobalOptions          0.1.2     2020-06-10 [1] CRAN (R 4.4.3)
+##  glue                   1.8.0     2024-09-30 [1] CRAN (R 4.4.3)
+##  gridExtra              2.3       2017-09-09 [1] CRAN (R 4.4.3)
+##  gtable                 0.3.6     2024-10-25 [1] CRAN (R 4.4.3)
+##  HDF5Array            * 1.34.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  hexbin                 1.28.5    2024-11-13 [1] CRAN (R 4.4.3)
+##  hms                    1.1.4     2025-10-17 [1] CRAN (R 4.4.3)
+##  htmltools              0.5.8.1   2024-04-04 [1] CRAN (R 4.4.3)
+##  httpuv                 1.6.16    2025-04-16 [1] CRAN (R 4.4.3)
+##  httr                   1.4.7     2023-08-15 [1] CRAN (R 4.4.3)
+##  igraph                 2.1.4     2025-01-23 [1] CRAN (R 4.4.3)
+##  IRanges              * 2.40.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  irlba                  2.3.5.1   2022-10-03 [1] CRAN (R 4.4.3)
+##  iterators              1.0.14    2022-02-05 [1] CRAN (R 4.4.3)
+##  jquerylib              0.1.4     2021-04-26 [1] CRAN (R 4.4.3)
+##  jsonlite               2.0.0     2025-03-27 [1] CRAN (R 4.4.3)
+##  knitr                  1.50      2025-03-16 [1] CRAN (R 4.4.3)
+##  labeling               0.4.3     2023-08-29 [1] CRAN (R 4.4.3)
+##  later                  1.4.4     2025-08-27 [1] CRAN (R 4.4.3)
+##  lattice                0.22-7    2025-04-02 [1] CRAN (R 4.4.3)
+##  lifecycle              1.0.4     2023-11-07 [1] CRAN (R 4.4.3)
+##  limma                  3.62.1    2024-11-03 [1] Bioconductor 3.20 (R 4.4.2)
+##  locfit                 1.5-9.12  2025-03-05 [1] CRAN (R 4.4.3)
+##  lubridate            * 1.9.4     2024-12-08 [1] CRAN (R 4.4.3)
+##  magrittr             * 2.0.4     2025-09-12 [1] CRAN (R 4.4.3)
+##  MASS                   7.3-65    2025-02-28 [1] CRAN (R 4.4.3)
+##  Matrix               * 1.7-4     2025-08-28 [1] CRAN (R 4.4.3)
+##  MatrixGenerics       * 1.18.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  matrixStats          * 1.5.0     2025-01-07 [1] CRAN (R 4.4.3)
+##  memoise                2.0.1     2021-11-26 [1] CRAN (R 4.4.3)
+##  metapod                1.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  otel                   0.2.0     2025-08-29 [1] CRAN (R 4.4.3)
+##  patchwork            * 1.3.2     2025-08-25 [1] CRAN (R 4.4.3)
+##  pillar                 1.11.1    2025-09-17 [1] CRAN (R 4.4.3)
+##  pkgbuild               1.4.8     2025-05-26 [1] CRAN (R 4.4.3)
+##  pkgconfig              2.0.3     2019-09-22 [1] CRAN (R 4.4.3)
+##  pkgload                1.4.1     2025-09-23 [1] CRAN (R 4.4.3)
+##  plyr                   1.8.9     2023-10-02 [1] CRAN (R 4.4.3)
+##  png                    0.1-8     2022-11-29 [1] CRAN (R 4.4.3)
+##  processx               3.8.6     2025-02-21 [1] CRAN (R 4.4.3)
+##  promises               1.5.0     2025-11-01 [1] CRAN (R 4.4.3)
+##  ps                     1.9.1     2025-04-12 [1] CRAN (R 4.4.3)
+##  purrr                * 1.2.0     2025-11-04 [1] CRAN (R 4.4.3)
+##  R.methodsS3            1.8.2     2022-06-13 [1] CRAN (R 4.4.3)
+##  R.oo                   1.27.1    2025-05-02 [1] CRAN (R 4.4.3)
+##  R.utils                2.13.0    2025-02-24 [1] CRAN (R 4.4.3)
+##  R6                     2.6.1     2025-02-15 [1] CRAN (R 4.4.3)
+##  RColorBrewer         * 1.1-3     2022-04-03 [1] CRAN (R 4.4.3)
+##  Rcpp                   1.1.0     2025-07-02 [1] CRAN (R 4.4.3)
+##  RCurl                  1.98-1.17 2025-03-22 [1] CRAN (R 4.4.3)
+##  readr                * 2.1.6     2025-11-14 [1] CRAN (R 4.4.3)
+##  readxl               * 1.4.5     2025-03-07 [1] CRAN (R 4.4.3)
+##  registry               0.5-1     2019-03-05 [1] CRAN (R 4.4.3)
+##  remotes                2.5.0     2024-03-17 [1] CRAN (R 4.4.3)
+##  restfulr               0.0.16    2025-06-27 [1] CRAN (R 4.4.3)
+##  rhdf5                * 2.50.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  rhdf5filters           1.18.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  Rhdf5lib               1.28.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  rjson                  0.2.23    2024-09-16 [1] CRAN (R 4.4.3)
+##  rlang                  1.1.6     2025-04-11 [1] CRAN (R 4.4.3)
+##  rmarkdown              2.30      2025-09-28 [1] CRAN (R 4.4.3)
+##  rmdformats             1.0.4     2022-05-17 [1] CRAN (R 4.4.3)
+##  rprojroot              2.1.1     2025-08-26 [1] CRAN (R 4.4.3)
+##  Rsamtools              2.22.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  rstudioapi             0.17.1    2024-10-22 [1] CRAN (R 4.4.3)
+##  rsvd                   1.0.5     2021-04-16 [1] CRAN (R 4.4.1)
+##  rtracklayer            1.66.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  S4Arrays             * 1.6.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  S4Vectors            * 0.44.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  S7                     0.2.1     2025-11-14 [1] CRAN (R 4.4.3)
+##  sass                   0.4.10    2025-04-11 [1] CRAN (R 4.4.3)
+##  ScaledMatrix           1.14.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  scales               * 1.4.0     2025-04-24 [1] CRAN (R 4.4.3)
+##  scater               * 1.34.1    2025-03-03 [1] Bioconductor 3.20 (R 4.4.2)
+##  scDblFinder          * 1.23.4    2025-08-22 [1] Bioconductor 3.22 (R 4.4.3)
+##  scran                  1.34.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  scuttle              * 1.16.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  seriation            * 1.5.8     2025-08-20 [1] CRAN (R 4.4.3)
+##  sessioninfo            1.2.3     2025-02-05 [1] CRAN (R 4.4.3)
+##  shape                  1.4.6.1   2024-02-23 [1] CRAN (R 4.4.3)
+##  SingleCellExperiment * 1.28.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  SparseArray          * 1.6.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.3)
+##  statmod                1.5.1     2025-10-09 [1] CRAN (R 4.4.3)
+##  strex                * 2.0.1     2024-10-03 [1] CRAN (R 4.4.3)
+##  stringi                1.8.7     2025-03-27 [1] CRAN (R 4.4.3)
+##  stringr              * 1.6.0     2025-11-04 [1] CRAN (R 4.4.3)
+##  SummarizedExperiment * 1.36.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  tibble               * 3.3.0     2025-06-08 [1] CRAN (R 4.4.3)
+##  tidyr                * 1.3.1     2024-01-24 [1] CRAN (R 4.4.3)
+##  tidyselect             1.2.1     2024-03-11 [1] CRAN (R 4.4.3)
+##  tidyverse            * 2.0.0     2023-02-22 [1] CRAN (R 4.4.3)
+##  timechange             0.3.0     2024-01-18 [1] CRAN (R 4.4.3)
+##  TSP                    1.2.6     2025-11-27 [1] CRAN (R 4.4.3)
+##  tzdb                   0.5.0     2025-03-15 [1] CRAN (R 4.4.3)
+##  UCSC.utils             1.2.0     2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  UpSetR               * 1.4.0     2019-05-22 [1] CRAN (R 4.4.3)
+##  usethis                3.2.1     2025-09-06 [1] CRAN (R 4.4.3)
+##  vctrs                  0.6.5     2023-12-01 [1] CRAN (R 4.4.3)
+##  vipor                  0.4.7     2023-12-18 [1] CRAN (R 4.4.3)
+##  viridis              * 0.6.5     2024-01-29 [1] CRAN (R 4.4.3)
+##  viridisLite          * 0.4.2     2023-05-02 [1] CRAN (R 4.4.3)
+##  whisker                0.4.1     2022-12-05 [1] CRAN (R 4.4.3)
+##  withr                  3.0.2     2024-10-28 [1] CRAN (R 4.4.3)
+##  workflowr            * 1.7.2     2025-08-18 [1] CRAN (R 4.4.3)
+##  xfun                   0.54      2025-10-30 [1] CRAN (R 4.4.3)
+##  xgboost                3.1.2.1   2026-01-06 [1] local
+##  XML                    3.99-0.20 2025-11-08 [1] CRAN (R 4.4.3)
+##  XVector                0.46.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+##  yaml                 * 2.3.11    2025-11-28 [1] CRAN (R 4.4.3)
+##  zlibbioc               1.52.0    2024-10-29 [1] Bioconductor 3.20 (R 4.4.2)
+## 
+##  [1] /home/macnairw/packages/scprocess/.snakemake/conda/4fef11cadd34f9d2d13a0d6139d09340_/lib/R/library
+##  * ── Packages attached to the search path.
+## 
+## ──────────────────────────────────────────────────────────────────────────────</code></pre>
+</details>
+</div>
+</div>
+
+   
+   
+              </div>
+  </div>
+  </div>
+  </div>
+   
+      
+
+  <script>
+    $(document).ready(function () {
+
+		// add bootstrap table styles to pandoc tables
+	$('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+		
+ 		
+	    });
+  </script>
+
+
+
+    <!-- dynamically load mathjax for compatibility with self-contained -->
+  <script>
+    (function () {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+	document.getElementsByTagName("head")[0].appendChild(script);
+    })();
+  </script>
+  
+</body>
+</html>

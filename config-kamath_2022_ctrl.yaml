@@ -1,0 +1,29 @@
+project:
+  proj_dir:         /pmount/projects/site/pred/brain-sc-data/kamath_2022_ctrl
+  fastq_dir:        /pmount/projects/site/pred/brain-sc-analysis/studies/Kamath_2022_pos/data/fastqs
+    # arv_uuids:        [arkau-4zz18-m2javm2p1c81y0f]
+    # arv_instance:     arkau
+  full_tag:         kamath_2022_ctrl
+  short_tag:        kamath
+  your_name:        Will Macnair
+  affiliation:      Church of England
+  sample_metadata:  data/metadata/sample_metadata_kamath_2022_ctrl_pos.csv
+  ref_txome:        human_2024
+  date_stamp:       "2026-03-23"
+ambient:
+  ambient_method:   cellbender
+qc:
+  qc_max_mito:      0.10
+  qc_max_splice:    0.75
+marker_genes:
+  mkr_custom_genesets:
+    - name: human_brain
+label_celltypes:
+  - labeller:       scprocess
+    model:          human_cns
+zoom:
+  - data/metadata/zoom_params_kamath_2022_ctrl_dopaminergic.yaml
+resources:
+  retries:              2
+  gb_save_alevin_to_h5: 16
+  gb_run_cellbender:    32
