@@ -84,7 +84,7 @@ zoom:
 qc:
   qc_min_cells:   50
 integration:
-  int_n_dims:     30
+  int_n_dims:     20
 ```
 
 </details>
